@@ -1,0 +1,14 @@
+{
+  "name": "inkwell-blog-platform",
+  "version": "1.0.0",
+  "description": "MERN Blog Platform - Run both frontend and backend together",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ..",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm start --prefix frontend"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
