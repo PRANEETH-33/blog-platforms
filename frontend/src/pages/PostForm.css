@@ -1,30 +1,79 @@
-.post-form-wrap { max-width: 760px; margin: 0 auto; }
-.post-form-header { margin-bottom: 32px; }
-.post-form-header h1 { font-size: 32px; }
+.post-form-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 34px;
+}
 
-.post-form { display: flex; flex-direction: column; gap: 4px; }
+.post-form-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
 
-.post-textarea { min-height: 320px; }
+.post-form-header h1 {
+  font-size: 42px;
+  margin-bottom: 6px;
+}
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-.form-hint { font-size: 12px; color: var(--ink-light); margin-top: 4px; display: block; }
+.post-textarea {
+  min-height: 380px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--ink-light);
+  margin-top: 4px;
+  display: block;
+}
 
 .form-check {
-  display: flex; align-items: center; gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 0;
 }
+
 .form-check input[type="checkbox"] {
-  width: 16px; height: 16px; accent-color: var(--ink);
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
   cursor: pointer;
 }
-.form-check label { font-size: 14px; cursor: pointer; }
+
+.form-check label {
+  font-size: 14px;
+  cursor: pointer;
+}
 
 .form-actions {
-  display: flex; justify-content: flex-end; gap: 10px;
-  padding-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
 }
 
 @media (max-width: 600px) {
+  .post-form-wrap { padding: 22px; }
   .form-row { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column-reverse; }
+  .form-actions .btn { justify-content: center; }
 }

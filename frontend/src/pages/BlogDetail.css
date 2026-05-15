@@ -1,64 +1,152 @@
-.post-detail { max-width: 780px; margin: 0 auto; }
+.article-page { background: var(--white); }
 
-.breadcrumb { margin-bottom: 24px; }
-.breadcrumb a { font-size: 14px; font-weight: 700; color: var(--accent); }
-.breadcrumb a:hover { color: #1d4ed8; }
-
-.post-cover {
-  width: 100%; height: 380px; overflow: hidden;
-  border-radius: var(--radius); margin-bottom: 32px;
-  box-shadow: var(--shadow);
+.post-detail {
+  max-width: 860px;
+  margin: 0 auto;
 }
-.post-cover img { width: 100%; height: 100%; object-fit: cover; }
 
-.post-header { margin-bottom: 24px; }
-.post-tags { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.post-title { font-size: clamp(34px, 5vw, 58px); line-height: 1.05; margin-bottom: 20px; }
+.breadcrumb { margin-bottom: 28px; }
+.breadcrumb a {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.breadcrumb a:hover { color: #0d6f4d; }
+
+.post-header {
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.post-tags {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.post-title {
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.04;
+  margin-bottom: 24px;
+}
 
 .post-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
 }
-.post-author { display: flex; align-items: center; gap: 12px; }
-.author-dot.lg { width: 40px; height: 40px; font-size: 16px; }
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-tools {
+  display: flex;
+  gap: 8px;
+}
+
+.author-dot.lg {
+  width: 42px;
+  height: 42px;
+  font-size: 16px;
+}
+
+.post-cover {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin-bottom: 36px;
+}
+
+.post-cover img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
 
 .post-content {
-  font-size: 18px; line-height: 1.85; color: var(--ink-soft);
-  background: rgba(255,255,255,0.66);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
+  max-width: 730px;
+  margin: 0 auto;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 20px;
+  line-height: 1.9;
+  color: var(--ink);
 }
-.post-content p { margin-bottom: 16px; }
 
-/* Comments */
-.comments-section { margin-top: 8px; }
-.comments-section h2 { font-size: 24px; margin-bottom: 24px; }
+.comments-section {
+  max-width: 730px;
+  margin: 56px auto 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.comments-section h2 {
+  font-size: 26px;
+  margin-bottom: 22px;
+}
 
 .comment-form {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-bottom: 32px; padding: 20px;
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: 0 1px 2px rgba(17,24,39,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+  padding: 18px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .comment-login-prompt {
-  margin-bottom: 24px; padding: 20px;
+  margin-bottom: 24px;
+  padding: 20px;
   text-align: center;
-  background: var(--paper-warm); border-radius: var(--radius);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 .comment-login-prompt p { margin-bottom: 12px; }
 
-.comments-list { display: flex; flex-direction: column; gap: 16px; }
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
 .comment-item {
-  padding: 16px; background: var(--white);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: 0 1px 2px rgba(17,24,39,0.04);
+  padding: 16px 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
 }
+
 .comment-header {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 10px;
 }
-.comment-author { display: flex; align-items: center; gap: 8px; }
-.comment-body { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-body {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .post-title { font-size: 40px; }
+  .post-content { font-size: 18px; }
+  .post-tools { width: 100%; }
+}

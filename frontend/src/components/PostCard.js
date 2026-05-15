@@ -6,6 +6,7 @@ export default function PostCard({ post }) {
   const date = new Date(post.createdAt).toLocaleDateString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric',
   });
+  const readMinutes = Math.max(1, Math.ceil((post.content || post.excerpt || '').split(/\s+/).length / 220));
 
   return (
     <Link to={`/blog/${post._id}`} className="post-card-link" aria-label={`Open ${post.title}`}>
@@ -25,13 +26,12 @@ export default function PostCard({ post }) {
           )}
           <h3 className="post-card-title">{post.title}</h3>
           <p className="post-card-excerpt">{post.excerpt}</p>
-          <div className="post-card-action">Read and comment</div>
           <div className="post-card-meta">
             <div className="post-card-author">
               <div className="author-dot">{post.author?.name?.charAt(0)}</div>
-              <span>{post.author?.name}</span>
+              <span>{post.author?.name || 'Blog App writer'}</span>
             </div>
-            <span className="text-muted" style={{ fontSize: 13 }}>{date}</span>
+            <span className="post-card-date">{date} · {readMinutes} min read</span>
           </div>
         </div>
       </article>

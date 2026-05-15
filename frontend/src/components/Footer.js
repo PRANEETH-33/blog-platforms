@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <Link to="/" className="footer-logo">
-            <span>✦</span>
+            <span>B</span>
             Blog App
           </Link>
           <p>
@@ -22,7 +22,7 @@ export default function Footer() {
         <div className="footer-column">
           <h4>Explore</h4>
           <Link to="/">Home</Link>
-          <Link to="/blog">All Posts</Link>
+          <Link to="/blog">Stories</Link>
           <Link to="/create">Write</Link>
         </div>
 
@@ -35,7 +35,7 @@ export default function Footer() {
 
         <div className="footer-column">
           <h4>Account</h4>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Sign in</Link>
           <Link to="/register">Register</Link>
           <Link to="/dashboard">Dashboard</Link>
         </div>

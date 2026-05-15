@@ -1,12 +1,12 @@
 .site-footer {
   margin-top: 56px;
-  background: #0f172a;
+  background: var(--ink);
   color: #e5e7eb;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .footer-inner {
-  max-width: 1120px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 48px 24px 36px;
   display: grid;
@@ -19,13 +19,23 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 14px;
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: 'Lora', Georgia, serif;
   font-size: 28px;
-  font-weight: 750;
+  font-weight: 700;
   color: #ffffff;
 }
 
-.footer-logo span { color: #60a5fa; font-size: 18px; }
+.footer-logo span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 15px;
+}
 
 .footer-brand p {
   max-width: 380px;
@@ -56,10 +66,10 @@
   transition: color 0.2s;
 }
 
-.footer-column a:hover { color: #93c5fd; }
+.footer-column a:hover { color: #ffffff; }
 
 .footer-bottom {
-  max-width: 1120px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 18px 24px 24px;
   border-top: 1px solid rgba(255,255,255,0.08);

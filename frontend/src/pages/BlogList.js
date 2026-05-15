@@ -31,11 +31,19 @@ export default function BlogList() {
     e.preventDefault();
     setPage(1);
     setActiveTag('');
-    setQuery(search);
+    setQuery(search.trim());
+  };
+
+  const clearFilters = () => {
+    setSearch('');
+    setQuery('');
+    setActiveTag('');
+    setPage(1);
   };
 
   const featuredPost = posts[0];
   const regularPosts = posts.slice(1);
+  const feedPosts = page === 1 && !query && !activeTag ? regularPosts : posts;
   const trendingTags = Object.entries(
     posts.reduce((acc, post) => {
       (post.tags || []).forEach((tag) => {
@@ -45,7 +53,7 @@ export default function BlogList() {
     }, {})
   )
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 8);
+    .slice(0, 10);
 
   const formatDate = (date) => new Date(date).toLocaleDateString('en-US', {
     month: 'short',
@@ -54,47 +62,46 @@ export default function BlogList() {
   });
 
   return (
-    <div className="page">
+    <div className="page browse-page">
       <div className="container">
-        <div className="blog-list-header">
+        <header className="blog-list-header">
           <div>
-            <h1>All Posts</h1>
-            {!loading && <p className="text-muted mt-8">{total} article{total !== 1 ? 's' : ''} {activeTag ? `tagged ${activeTag}` : 'published'}</p>}
+            <span className="eyebrow">Explore Blog App</span>
+            <h1>Stories, essays, and updates from the community.</h1>
+            {!loading && (
+              <p className="text-muted mt-8">
+                {total} article{total !== 1 ? 's' : ''} {activeTag ? `tagged ${activeTag}` : query ? `matching "${query}"` : 'published'}
+              </p>
+            )}
           </div>
           <form className="search-form" onSubmit={handleSearch}>
             <input
               type="text"
               className="form-control"
-              placeholder="Search posts..."
+              placeholder="Search stories"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
             <button type="submit" className="btn btn-primary btn-sm">Search</button>
-            {query && (
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setSearch(''); setQuery(''); setActiveTag(''); setPage(1); }}>
+            {(query || activeTag) && (
+              <button type="button" className="btn btn-ghost btn-sm" onClick={clearFilters}>
                 Clear
               </button>
             )}
-            {activeTag && (
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setActiveTag(''); setPage(1); }}>
-                Clear topic
-              </button>
-            )}
           </form>
-        </div>
+        </header>
 
         {loading ? (
           <div className="spinner" />
         ) : posts.length === 0 ? (
-          <div className="empty-state text-center" style={{ padding: '80px 0' }}>
-            <p style={{ fontSize: 48 }}>📄</p>
-            <h3 style={{ marginTop: 16 }}>No posts found</h3>
-            <p className="text-muted mt-8">Try a different search term</p>
+          <div className="empty-state text-center">
+            <h3>No stories found</h3>
+            <p className="text-muted mt-8">Try another search or clear the filters.</p>
           </div>
         ) : (
-          <>
-            {page === 1 && !query && !activeTag && featuredPost && (
-              <section className="featured-layout">
+          <div className="browse-layout">
+            <main>
+              {page === 1 && !query && !activeTag && featuredPost && (
                 <Link to={`/blog/${featuredPost._id}`} className="featured-post">
                   {featuredPost.coverImage && (
                     <img src={featuredPost.coverImage} alt={featuredPost.title} />
@@ -104,60 +111,64 @@ export default function BlogList() {
                     <h2>{featuredPost.title}</h2>
                     <p>{featuredPost.excerpt}</p>
                     <div className="featured-meta">
-                      <span>{featuredPost.author?.name}</span>
+                      <span>{featuredPost.author?.name || 'Blog App writer'}</span>
                       <span>{formatDate(featuredPost.createdAt)}</span>
                     </div>
                   </div>
                 </Link>
+              )}
 
-                <aside className="discover-panel">
-                  <h3>Discover</h3>
-                  <p>Find fresh posts by topic, then open a story to read and join the comments.</p>
-                  <div className="topic-list">
-                    {trendingTags.length > 0 ? (
-                      trendingTags.map(([tag, count]) => (
-                        <button
-                          key={tag}
-                          type="button"
-                          className="topic-pill"
-                          onClick={() => { setSearch(''); setQuery(''); setActiveTag(tag); setPage(1); }}
-                        >
-                          {tag} <span>{count}</span>
-                        </button>
-                      ))
-                    ) : (
-                      <span className="text-muted">Topics appear as posts are tagged.</span>
-                    )}
-                  </div>
-                </aside>
-              </section>
-            )}
-
-            <div className="feed-header">
-              <h2>{query ? 'Search results' : activeTag ? `${activeTag} stories` : 'Latest stories'}</h2>
-              <span>{(page === 1 && !query && !activeTag ? regularPosts : posts).length} shown</span>
-            </div>
-
-            <div className="grid-3">
-              {(page === 1 && !query && !activeTag ? regularPosts : posts).map((post) => <PostCard key={post._id} post={post} />)}
-            </div>
-
-            {totalPages > 1 && (
-              <div className="pagination">
-                <button
-                  className="btn btn-outline btn-sm"
-                  onClick={() => setPage((p) => p - 1)}
-                  disabled={page === 1}
-                >← Prev</button>
-                <span className="page-info">Page {page} of {totalPages}</span>
-                <button
-                  className="btn btn-outline btn-sm"
-                  onClick={() => setPage((p) => p + 1)}
-                  disabled={page === totalPages}
-                >Next →</button>
+              <div className="feed-header">
+                <h2>{query ? 'Search results' : activeTag ? `${activeTag} stories` : 'Latest stories'}</h2>
+                <span>{feedPosts.length} shown</span>
               </div>
-            )}
-          </>
+
+              <div className="feed-list">
+                {feedPosts.map((post) => <PostCard key={post._id} post={post} />)}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="pagination">
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => setPage((p) => p - 1)}
+                    disabled={page === 1}
+                  >Previous</button>
+                  <span className="page-info">Page {page} of {totalPages}</span>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => setPage((p) => p + 1)}
+                    disabled={page === totalPages}
+                  >Next</button>
+                </div>
+              )}
+            </main>
+
+            <aside className="discover-panel">
+              <h3>Topics</h3>
+              <p>Jump into a subject and keep the feed focused.</p>
+              <div className="topic-list">
+                {trendingTags.length > 0 ? (
+                  trendingTags.map(([tag, count]) => (
+                    <button
+                      key={tag}
+                      type="button"
+                      className={`topic-pill ${activeTag === tag ? 'active' : ''}`}
+                      onClick={() => { setSearch(''); setQuery(''); setActiveTag(tag); setPage(1); }}
+                    >
+                      {tag} <span>{count}</span>
+                    </button>
+                  ))
+                ) : (
+                  <span className="text-muted">Topics appear as posts are tagged.</span>
+                )}
+              </div>
+              <div className="reader-note">
+                <strong>Reader mode</strong>
+                <p>Open any story to read without clutter and join the comments below the article.</p>
+              </div>
+            </aside>
+          </div>
         )}
       </div>
     </div>

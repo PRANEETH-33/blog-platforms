@@ -1,10 +1,8 @@
 .auth-page {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 66px);
   display: flex; align-items: center; justify-content: center;
   padding: 40px 24px;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(37,99,235,0.12), transparent 28rem),
-    var(--paper);
+  background: var(--paper);
 }
 
 .auth-card {
@@ -18,8 +16,8 @@
 
 .auth-header { text-align: center; margin-bottom: 28px; }
 .auth-brand {
-  font-family: 'Newsreader', Georgia, serif;
-  font-size: 24px; font-weight: 750; color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 24px; font-weight: 700; color: var(--ink);
   display: inline-block; margin-bottom: 20px;
 }
 .auth-header h1 { font-size: 32px; margin-bottom: 6px; }

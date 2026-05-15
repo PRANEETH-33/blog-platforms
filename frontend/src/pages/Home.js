@@ -11,100 +11,119 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/posts?limit=3').then(({ data }) => {
+    api.get('/posts?limit=6').then(({ data }) => {
       setPosts(data.posts);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
+  const leadPost = posts[0];
+  const recentPosts = posts.slice(1, 4);
+  const popularTopics = Array.from(new Set(posts.flatMap((post) => post.tags || []))).slice(0, 6);
+
   return (
     <div className="home">
-      {/* Hero */}
-      <section className="hero">
-        <div className="hero-inner container">
-          <div className="hero-tag">Blog App</div>
-          <h1 className="hero-title">
-            Ideas Worth<br />
-            <em>Writing About</em>
-          </h1>
-          <p className="hero-desc">
-            Discover thoughtful articles, share your perspective, and join
-            a community of curious minds.
-          </p>
-          <div className="hero-actions">
-            <Link to="/blog" className="btn btn-accent btn-lg">Explore Posts</Link>
-            {!user && (
-              <Link to="/register" className="btn btn-outline btn-lg">Start Writing</Link>
-            )}
-            {user && (
-              <Link to="/create" className="btn btn-outline btn-lg">Write a Post</Link>
-            )}
+      <section className="home-hero">
+        <div className="container hero-grid">
+          <div className="hero-copy">
+            <span className="eyebrow">Independent publishing</span>
+            <h1>Read deeply. Write clearly. Publish like it matters.</h1>
+            <p>
+              Blog App is a modern blog platform for stories, essays, updates, and community discussion.
+            </p>
+            <div className="hero-actions">
+              <Link to="/blog" className="btn btn-primary btn-lg">Explore stories</Link>
+              <Link to={user ? '/create' : '/register'} className="btn btn-outline btn-lg">
+                {user ? 'Write a post' : 'Start writing'}
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="hero-decoration">
-          <div className="deco-circle c1" />
-          <div className="deco-circle c2" />
-          <div className="deco-line" />
-        </div>
-      </section>
 
-      {/* Features strip */}
-      <section className="features">
-        <div className="container">
-          <div className="features-grid">
-            <div className="feature-item">
-              <span className="feature-icon">✍️</span>
-              <h4>Write Freely</h4>
-              <p>Simple editor, powerful publishing</p>
+          <div className="hero-publication" aria-label="Featured publication preview">
+            <div className="publication-header">
+              <span>Blog App Weekly</span>
+              <span>Curated today</span>
             </div>
-            <div className="feature-item">
-              <span className="feature-icon">💬</span>
-              <h4>Engage & Discuss</h4>
-              <p>Comments and community built-in</p>
-            </div>
-            <div className="feature-item">
-              <span className="feature-icon">🔒</span>
-              <h4>Secure & Private</h4>
-              <p>JWT auth, full account control</p>
-            </div>
+            {leadPost ? (
+              <Link to={`/blog/${leadPost._id}`} className="hero-story">
+                {leadPost.coverImage && <img src={leadPost.coverImage} alt={leadPost.title} />}
+                <div>
+                  <span className="story-kicker">{leadPost.tags?.[0] || 'Featured'}</span>
+                  <h2>{leadPost.title}</h2>
+                  <p>{leadPost.excerpt}</p>
+                  <span className="story-byline">By {leadPost.author?.name || 'Blog App writer'}</span>
+                </div>
+              </Link>
+            ) : (
+              <div className="hero-story hero-story-empty">
+                <span className="story-kicker">Open call</span>
+                <h2>Your next idea belongs here.</h2>
+                <p>Publish the first article and set the tone for the community.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Recent posts */}
+      <section className="platform-strip">
+        <div className="container strip-grid">
+          <div>
+            <span className="strip-label">For readers</span>
+            <strong>Focused article pages with comments.</strong>
+          </div>
+          <div>
+            <span className="strip-label">For writers</span>
+            <strong>Draft, publish, edit, and track posts.</strong>
+          </div>
+          <div>
+            <span className="strip-label">For communities</span>
+            <strong>Topic browsing and clean discovery.</strong>
+          </div>
+        </div>
+      </section>
+
       <section className="recent-posts container">
         <div className="section-header">
-          <h2>Recent Posts</h2>
-          <Link to="/blog" className="btn btn-ghost btn-sm">View all →</Link>
+          <div>
+            <span className="eyebrow">Latest from the platform</span>
+            <h2>New stories</h2>
+          </div>
+          <Link to="/blog" className="btn btn-ghost btn-sm">View all</Link>
         </div>
+
         {loading ? (
           <div className="spinner" />
         ) : posts.length === 0 ? (
           <div className="empty-state">
-            <p>No posts yet. Be the first to write!</p>
+            <h3>No stories have been published yet.</h3>
+            <p>Be the first writer to bring the feed to life.</p>
             <Link to={user ? '/create' : '/register'} className="btn btn-primary mt-16">
-              {user ? 'Create Post' : 'Get Started'}
+              {user ? 'Create post' : 'Create account'}
             </Link>
           </div>
         ) : (
-          <div className="grid-3">
-            {posts.map((post) => <PostCard key={post._id} post={post} />)}
+          <div className="home-content-grid">
+            <div className="story-stack">
+              {recentPosts.map((post) => <PostCard key={post._id} post={post} />)}
+            </div>
+            <aside className="topic-sidebar">
+              <h3>Browse topics</h3>
+              <div className="home-topics">
+                {popularTopics.length > 0 ? (
+                  popularTopics.map((topic) => (
+                    <Link key={topic} to={`/blog`} className="topic-chip">{topic}</Link>
+                  ))
+                ) : (
+                  <p className="text-muted">Topics appear as writers tag their stories.</p>
+                )}
+              </div>
+              <Link to={user ? '/dashboard' : '/register'} className="sidebar-link">
+                {user ? 'Open writer dashboard' : 'Join as a writer'}
+              </Link>
+            </aside>
           </div>
         )}
       </section>
-
-      {/* CTA */}
-      {!user && (
-        <section className="cta">
-          <div className="container">
-            <div className="cta-box">
-              <h2>Ready to share your story?</h2>
-              <p>Join Blog App and start writing today. Free forever.</p>
-              <Link to="/register" className="btn btn-accent btn-lg">Create Account</Link>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   );
 }

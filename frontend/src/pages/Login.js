@@ -50,12 +50,12 @@ export default function Login() {
             <label>Password</label>
             <input
               type="password" name="password" className="form-control"
-              placeholder="••••••••"
+              placeholder="Password"
               value={form.password} onChange={handleChange} required
             />
           </div>
           <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 

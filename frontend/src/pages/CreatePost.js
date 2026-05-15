@@ -39,27 +39,27 @@ export default function CreatePost() {
       <div className="container">
         <div className="post-form-wrap">
           <div className="post-form-header">
-            <h1>New Post</h1>
-            <p className="text-muted">Share your thoughts with the world</p>
+            <h1>New story</h1>
+            <p className="text-muted">Draft, tag, and publish a clean article for your readers.</p>
           </div>
 
           {error && <div className="alert alert-error">{error}</div>}
 
           <form onSubmit={handleSubmit} className="post-form">
             <div className="form-group">
-              <label>Title *</label>
+              <label>Headline *</label>
               <input
                 type="text" name="title" className="form-control"
-                placeholder="Your post title..."
+                placeholder="A clear, memorable headline"
                 value={form.title} onChange={handleChange} required
               />
             </div>
 
             <div className="form-group">
-              <label>Content *</label>
+              <label>Story *</label>
               <textarea
                 name="content" className="form-control post-textarea"
-                placeholder="Write your content here..."
+                placeholder="Start writing..."
                 value={form.content} onChange={handleChange} required
               />
             </div>
@@ -97,7 +97,7 @@ export default function CreatePost() {
                 Cancel
               </button>
               <button type="submit" className="btn btn-accent" disabled={loading}>
-                {loading ? 'Publishing...' : 'Publish Post'}
+                {loading ? 'Publishing...' : 'Publish story'}
               </button>
             </div>
           </form>

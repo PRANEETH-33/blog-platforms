@@ -52,20 +52,20 @@ export default function EditPost() {
       <div className="container">
         <div className="post-form-wrap">
           <div className="post-form-header">
-            <h1>Edit Post</h1>
-            <p className="text-muted">Update your article</p>
+            <h1>Edit story</h1>
+            <p className="text-muted">Refine the article before readers see it.</p>
           </div>
 
           {error && <div className="alert alert-error">{error}</div>}
 
           <form onSubmit={handleSubmit} className="post-form">
             <div className="form-group">
-              <label>Title *</label>
+              <label>Headline *</label>
               <input type="text" name="title" className="form-control" value={form.title} onChange={handleChange} required />
             </div>
 
             <div className="form-group">
-              <label>Content *</label>
+              <label>Story *</label>
               <textarea name="content" className="form-control post-textarea" value={form.content} onChange={handleChange} required />
             </div>
 

@@ -31,16 +31,16 @@ export default function Dashboard() {
         <div className="dashboard-header">
           <div>
             <h1>Dashboard</h1>
-            <p className="text-muted mt-8">Welcome back, <strong>{user?.name}</strong></p>
+            <p className="text-muted mt-8">Manage drafts, published stories, and performance for <strong>{user?.name}</strong>.</p>
           </div>
-          <Link to="/create" className="btn btn-accent">+ New Post</Link>
+          <Link to="/create" className="btn btn-accent">New story</Link>
         </div>
 
         {/* Stats */}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-value">{posts.length}</div>
-            <div className="stat-label">Total Posts</div>
+            <div className="stat-label">Total stories</div>
           </div>
           <div className="stat-card">
             <div className="stat-value">{posts.filter((p) => p.published).length}</div>
@@ -58,13 +58,13 @@ export default function Dashboard() {
 
         {/* Posts table */}
         <div className="dashboard-section">
-          <h2>Your Posts</h2>
+          <h2>Your stories</h2>
           {loading ? (
             <div className="spinner" />
           ) : posts.length === 0 ? (
             <div className="empty-state text-center" style={{ padding: '48px 0' }}>
               <p className="text-muted">No posts yet.</p>
-              <Link to="/create" className="btn btn-primary mt-16">Write your first post</Link>
+              <Link to="/create" className="btn btn-primary mt-16">Write your first story</Link>
             </div>
           ) : (
             <div className="posts-table">
